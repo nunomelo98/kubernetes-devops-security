@@ -16,7 +16,7 @@ apt install -y curl
 apt update
 
 apt install apt-transport-https ca-certificates curl gnup
-KUBE_VERSION=1.30.0
+KUBE_VERSION=1.30.2
 KUBE_VERSIONS=1.30.2
 # add the key GPG for the new Kubernetes repository
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v${KUBE_VERSION}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
