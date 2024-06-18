@@ -6,29 +6,30 @@ echo "PS1='\[\e[01;36m\]\u\[\e[01;37m\]@\[\e[01;33m\]\H\[\e[01;37m\]:\[\e[01;32m
 sed -i '1s/^/force_color_prompt=yes\n/' ~/.bashrc
 source ~/.bashrc
 
-apt-get autoremove -y  #removes the packages that are no longer needed
-apt-get update
+apt autoremove -y  #removes the packages that are no longer needed
+apt update
 systemctl daemon-reload
 
-# Instalar o curl se não estiver presente
-apt-get update
-apt-get install -y curl
+# Install the curl if not instaled
+apt update
+apt install -y curl
+apt update
 
+apt install apt-transport-https ca-certificates curl gnup
 KUBE_VERSION=1.30.0
 
-# Adicionar a chave GPG do novo repositório Kubernetes
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v${KUBE_VERSION}/deb/Release.key | gpg --dearmor -o /usr/share/keyrings/kubernetes-archive-keyring.gpg
-
-# Adicionar o novo repositório Kubernetes
+# add the key GPG for the new Kubernetes repository
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v${KUBE_VERSION}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# add new kubernetes repository
 cat <<EOF > /etc/apt/sources.list.d/kubernetes.list
-deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBE_VERSION}/deb/ /
+deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBE_VERSION}/deb/ /
 EOF
 
 
 
 
-apt-get update
-apt-get install -y kubelet=${KUBE_VERSION}-00 vim build-essential jq python3-pip docker.io kubectl=${KUBE_VERSION}-00 kubernetes-cni=0.8.7-00 kubeadm=${KUBE_VERSION}-00
+apt update
+apt install -y kubelet=${KUBE_VERSION}-00 vim build-essential jq python3-pip docker.io kubectl=${KUBE_VERSION}-00 kubernetes-cni=0.8.7-00 kubeadm=${KUBE_VERSION}-00
 pip3 install jc
 
 ### UUID of VM 
